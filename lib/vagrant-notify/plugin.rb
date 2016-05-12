@@ -59,6 +59,11 @@ module Vagrant
         require_relative 'command'
         Vagrant::Notify::Command
       end
+
+      config(:notify) do
+        require_relative 'config'
+        Vagrant::Notify::Config
+      end
     end
   end
 end

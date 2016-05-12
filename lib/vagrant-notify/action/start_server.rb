@@ -17,6 +17,10 @@ module Vagrant
           port = next_available_port
           id = env[:machine].id
           dir = File.expand_path('../../', __FILE__)
+          
+          @app.call env
+
+          return if env[:machine].config.notify.enable == false
 
           if which('ruby')
             env[:notify_data][:pid]  = Process.spawn("ruby #{dir}/server.rb #{id} #{port}")
@@ -27,8 +31,6 @@ module Vagrant
           else
             env[:machine].ui.error("Unable to spawn TCPServer daemon, ruby not found in $PATH")
           end
-
-          @app.call env
         end
 
         def next_available_port
