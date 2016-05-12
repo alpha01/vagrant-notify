@@ -9,8 +9,12 @@ module Vagrant
 
       def validate(machine)
         errors = _detected_errors
-        if @enable != false || @enable != true
-          errors << "Unknown option: #{enable}"
+        if @enable != 0
+          if @enable != false && @enable != true
+            errors << "Unknown option: #{@enable}"
+
+            { "notify" => errors }
+          end
         end
       end
 
