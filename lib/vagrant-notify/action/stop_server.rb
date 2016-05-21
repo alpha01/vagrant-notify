@@ -7,7 +7,6 @@ module Vagrant
         end
 
         def call(env)
-          @app.call env
           
           return if env[:machine].config.notify.enable == false
 
@@ -15,6 +14,8 @@ module Vagrant
             env[:machine].communicate.sudo('rm /usr/bin/notify-send; exit 0')
             env[:machine].communicate.sudo('mv /usr/bin/{notify-send.bkp,notify-send}; exit 0')
           end
+
+          @app.call env
 
           pid = env[:notify_data][:pid]
 
